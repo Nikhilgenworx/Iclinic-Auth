@@ -1,7 +1,6 @@
 from uuid import UUID
 
 from sqlalchemy.orm import Session
-
 from src.data.models.postgres.permission import Permission
 
 
@@ -13,18 +12,10 @@ class PermissionRepository:
         self.db.add(permission)
 
     def get_by_id(self, permission_id: UUID) -> Permission | None:
-        return (
-            self.db.query(Permission)
-            .filter(Permission.id == permission_id)
-            .first()
-        )
+        return self.db.query(Permission).filter(Permission.id == permission_id).first()
 
     def get_by_name(self, name: str) -> Permission | None:
-        return (
-            self.db.query(Permission)
-            .filter(Permission.name == name)
-            .first()
-        )
+        return self.db.query(Permission).filter(Permission.name == name).first()
 
     def get_all(self) -> list[Permission]:
         return self.db.query(Permission).all()

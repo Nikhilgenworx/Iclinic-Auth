@@ -1,9 +1,8 @@
 from uuid import UUID
 
 from sqlalchemy.orm import Session
-
-from src.data.repositories.role_repository import RoleRepository
 from src.data.repositories.role_permission_repository import RolePermissionRepository
+from src.data.repositories.role_repository import RoleRepository
 
 
 class RoleService:

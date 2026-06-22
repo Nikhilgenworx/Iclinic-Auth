@@ -1,9 +1,8 @@
 from uuid import UUID
 
 from sqlalchemy.orm import Session
-
-from src.data.repositories.user_repository import UserRepository
 from src.data.repositories.role_permission_repository import RolePermissionRepository
+from src.data.repositories.user_repository import UserRepository
 
 
 class AuthorizationService:
@@ -18,9 +17,7 @@ class AuthorizationService:
         if not user:
             return False
 
-        permissions = self.role_permission_repo.get_permissions_for_role(
-            user.role_id
-        )
+        permissions = self.role_permission_repo.get_permissions_for_role(user.role_id)
         return permission in permissions
 
     def get_user_permissions(self, user_id: UUID) -> list[str]:
@@ -29,6 +26,4 @@ class AuthorizationService:
         if not user:
             return []
 
-        return self.role_permission_repo.get_permissions_for_role(
-            user.role_id
-        )
+        return self.role_permission_repo.get_permissions_for_role(user.role_id)

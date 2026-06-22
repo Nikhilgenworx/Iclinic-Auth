@@ -1,11 +1,9 @@
 from uuid import UUID
 
-from fastapi import HTTPException
-from fastapi import status
+from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
-
-from src.data.repositories.user_repository import UserRepository
 from src.data.repositories.role_repository import RoleRepository
+from src.data.repositories.user_repository import UserRepository
 
 
 class UserService:
@@ -18,8 +16,7 @@ class UserService:
         user = self.user_repo.get_by_id(user_id)
         if not user:
             raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND,
-                detail="User not found"
+                status_code=status.HTTP_404_NOT_FOUND, detail="User not found"
             )
 
         role = self.role_repo.get_by_id(user.role_id)
@@ -37,8 +34,7 @@ class UserService:
         user = self.user_repo.get_by_id(user_id)
         if not user:
             raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND,
-                detail="User not found"
+                status_code=status.HTTP_404_NOT_FOUND, detail="User not found"
             )
 
         user.profile_completed = True
@@ -49,21 +45,22 @@ class UserService:
         for u in users:
             role = self.role_repo.get_by_id(u.role_id)
             role_name = role.name if role else "PATIENT"
-            result.append({
-                "id": u.id,
-                "email": u.email,
-                "role": role_name,
-                "profile_completed": u.profile_completed,
-                "is_active": u.is_active,
-            })
+            result.append(
+                {
+                    "id": u.id,
+                    "email": u.email,
+                    "role": role_name,
+                    "profile_completed": u.profile_completed,
+                    "is_active": u.is_active,
+                }
+            )
         return result
 
     def deactivate_user(self, user_id: UUID) -> None:
         user = self.user_repo.get_by_id(user_id)
         if not user:
             raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND,
-                detail="User not found"
+                status_code=status.HTTP_404_NOT_FOUND, detail="User not found"
             )
         user.is_active = False
 
@@ -71,7 +68,6 @@ class UserService:
         user = self.user_repo.get_by_id(user_id)
         if not user:
             raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND,
-                detail="User not found"
+                status_code=status.HTTP_404_NOT_FOUND, detail="User not found"
             )
         user.is_active = True

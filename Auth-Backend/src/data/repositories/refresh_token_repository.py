@@ -1,7 +1,6 @@
 from uuid import UUID
 
 from sqlalchemy.orm import Session
-
 from src.data.models.postgres.refresh_token import RefreshToken
 
 
@@ -25,5 +24,5 @@ class RefreshTokenRepository:
     def revoke_all_for_user(self, user_id: UUID) -> None:
         self.db.query(RefreshToken).filter(
             RefreshToken.user_id == user_id,
-            RefreshToken.is_revoked == False  # noqa: E712
+            RefreshToken.is_revoked == False,  # noqa: E712
         ).update({"is_revoked": True})

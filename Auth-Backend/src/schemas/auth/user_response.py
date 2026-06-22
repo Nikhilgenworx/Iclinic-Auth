@@ -1,7 +1,6 @@
 from uuid import UUID
 
-from pydantic import BaseModel
-from pydantic import EmailStr
+from pydantic import BaseModel, EmailStr
 
 
 class UserResponse(BaseModel):

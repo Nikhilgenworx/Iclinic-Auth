@@ -1,9 +1,8 @@
 from uuid import UUID
 
 from sqlalchemy.orm import Session
-
-from src.data.models.postgres.role_permission import RolePermission
 from src.data.models.postgres.permission import Permission
+from src.data.models.postgres.role_permission import RolePermission
 
 
 class RolePermissionRepository:
@@ -17,10 +16,7 @@ class RolePermissionRepository:
         """Get all permission names for a role."""
         results = (
             self.db.query(Permission.name)
-            .join(
-                RolePermission,
-                RolePermission.permission_id == Permission.id
-            )
+            .join(RolePermission, RolePermission.permission_id == Permission.id)
             .filter(RolePermission.role_id == role_id)
             .all()
         )
@@ -30,10 +26,7 @@ class RolePermissionRepository:
         """Get all Permission objects for a role."""
         return (
             self.db.query(Permission)
-            .join(
-                RolePermission,
-                RolePermission.permission_id == Permission.id
-            )
+            .join(RolePermission, RolePermission.permission_id == Permission.id)
             .filter(RolePermission.role_id == role_id)
             .all()
         )

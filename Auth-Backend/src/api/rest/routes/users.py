@@ -1,12 +1,11 @@
 from uuid import UUID
 
-from fastapi import APIRouter
-from fastapi import Depends
-
-from src.api.rest.dependencies import DBSession
-from src.api.rest.dependencies import CurrentUser
-from src.api.rest.dependencies import require_role
-from src.api.rest.dependencies import require_permission
+from fastapi import APIRouter, Depends
+from src.api.rest.dependencies import (
+    CurrentUser,
+    DBSession,
+    require_permission,
+)
 from src.core.services.user_service import UserService
 from src.schemas.auth.user_response import UserResponse
 

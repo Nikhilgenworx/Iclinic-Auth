@@ -1,17 +1,18 @@
 """Seed script for roles and permissions."""
-import sys
+
 import os
+import sys
 
 sys.path.insert(0, os.path.dirname(__file__))
 
 from dotenv import load_dotenv
+
 load_dotenv(os.path.join(os.path.dirname(__file__), ".env"))
 
 from src.config.database import SessionLocal
-from src.data.models.postgres.role import Role
 from src.data.models.postgres.permission import Permission
+from src.data.models.postgres.role import Role
 from src.data.models.postgres.role_permission import RolePermission
-
 
 # Define roles
 ROLES = [
@@ -81,9 +82,11 @@ def seed():
         # Seed permissions
         perm_map = {}
         for perm_data in PERMISSIONS:
-            existing = db.query(Permission).filter(
-                Permission.name == perm_data["name"]
-            ).first()
+            existing = (
+                db.query(Permission)
+                .filter(Permission.name == perm_data["name"])
+                .first()
+            )
             if not existing:
                 perm = Permission(**perm_data)
                 db.add(perm)
@@ -99,10 +102,14 @@ def seed():
             role_id = role_map[role_name]
             for perm_name in permissions:
                 perm_id = perm_map[perm_name]
-                existing = db.query(RolePermission).filter(
-                    RolePermission.role_id == role_id,
-                    RolePermission.permission_id == perm_id,
-                ).first()
+                existing = (
+                    db.query(RolePermission)
+                    .filter(
+                        RolePermission.role_id == role_id,
+                        RolePermission.permission_id == perm_id,
+                    )
+                    .first()
+                )
                 if not existing:
                     rp = RolePermission(role_id=role_id, permission_id=perm_id)
                     db.add(rp)

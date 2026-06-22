@@ -1,0 +1,58 @@
+[project]
+name = "iclinic"
+version = "0.1.0"
+description = "iClinic AI Front Desk Assistant"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "alembic>=1.18.4",
+    "python-dotenv>=1.0.1",
+    "fastapi>=0.115.0",
+    "uvicorn>=0.30.6",
+    "passlib[bcrypt]>=1.7.4",
+    "bcrypt==4.0.1",
+    "psycopg2-binary>=2.9.9",
+    "python-jose[cryptography]>=3.3.0",
+    "pydantic>=2.9.2",
+    "pydantic-settings>=2.5.2",
+    "sqlalchemy>=2.0.35",
+    "email-validator>=2.2.0",
+    "httpx>=0.27.0",
+    "langchain-core>=0.3.0",
+    "langchain-openai>=0.3.0",
+    "langgraph>=0.4.0",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.12.0",
+    "pre-commit>=4.0.0",
+]
+
+[tool.ruff]
+line-length = 88
+target-version = "py313"
+exclude = ["alembic/versions/*"]
+
+[tool.ruff.lint]
+select = [
+    "E",   # Style errors
+    "F",   # Unused imports, undefined variables
+    "I",   # Import sorting
+    "UP",  # Python modernization
+    "B",   # Common bug patterns
+]
+ignore = [
+    "E501",  # Line too long — prompts and SQL strings are intentionally long
+    "E712",  # == True comparisons — required for SQLAlchemy filter expressions
+    "B008",  # Function calls in default arguments — standard FastAPI Depends() pattern
+]
+
+[tool.ruff.lint.per-file-ignores]
+"Auth-Backend/seed.py" = ["E402"]
+"alembic/env.py" = ["E402"]
+"Backend/src/seed.py" = ["E402"]
+"Backend/src/control/chat_live.py" = ["E402"]
+"Backend/src/control/chat.py" = ["E402"]
+
+
